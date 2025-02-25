@@ -1,1 +1,203 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes flicker {
+  0% {
+    opacity: 0.97;
+  }
+  5% {
+    opacity: 0.95;
+  }
+  10% {
+    opacity: 0.9;
+  }
+  15% {
+    opacity: 0.95;
+  }
+  20% {
+    opacity: 0.98;
+  }
+  25% {
+    opacity: 0.95;
+  }
+  30% {
+    opacity: 0.9;
+  }
+  35% {
+    opacity: 0.95;
+  }
+  40% {
+    opacity: 0.98;
+  }
+  45% {
+    opacity: 0.95;
+  }
+  50% {
+    opacity: 0.9;
+  }
+  55% {
+    opacity: 0.95;
+  }
+  60% {
+    opacity: 0.98;
+  }
+  65% {
+    opacity: 0.95;
+  }
+  70% {
+    opacity: 0.9;
+  }
+  75% {
+    opacity: 0.95;
+  }
+  80% {
+    opacity: 0.98;
+  }
+  85% {
+    opacity: 0.95;
+  }
+  90% {
+    opacity: 0.9;
+  }
+  95% {
+    opacity: 0.95;
+  }
+  100% {
+    opacity: 0.98;
+  }
+}
+
+@layer base {
+  body {
+    @apply bg-black text-green-500 font-mono;
+  }
+}
+
+@layer components {
+  .crt {
+    @apply relative overflow-hidden;
+  }
+
+  .crt::before {
+    content: ' ';
+    @apply block absolute top-0 left-0 bottom-0 right-0 bg-gradient-to-b from-transparent to-black opacity-10 z-10 pointer-events-none;
+  }
+
+  .crt::after {
+    content: ' ';
+    @apply block absolute top-0 left-0 bottom-0 right-0 bg-[repeating-linear-gradient(0deg,rgba(0,0,0,0.15),rgba(0,0,0,0.15)_1px,transparent_1px,transparent_2px)] pointer-events-none;
+    animation: flicker 0.15s infinite;
+  }
+
+  .terminal-text {
+    @apply text-green-500 font-mono;
+  }
+
+  .cursor {
+    @apply inline-block w-2 h-4 bg-green-500 ml-1 animate-pulse;
+  }
+}
+
+.crt-screen {
+  position: relative;
+  overflow: hidden;
+}
+
+.crt-screen::before {
+  content: ' ';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+    linear-gradient(
+      90deg,
+      rgba(255, 0, 0, 0.06),
+      rgba(0, 255, 0, 0.02),
+      rgba(0, 0, 255, 0.06)
+    );
+  z-index: 99;
+  background-size: 100% 2px, 3px 100%;
+  pointer-events: none;
+}
+
+.crt-screen::after {
+  content: ' ';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(18, 16, 16, 0.1);
+  opacity: 0;
+  z-index: 99;
+  pointer-events: none;
+  animation: flicker 0.15s infinite;
+}
+
+.scanlines {
+  background: linear-gradient(
+    to bottom,
+    transparent 50%,
+    rgba(0, 0, 0, 0.4) 51%
+  );
+  background-size: 100% 4px;
+  animation: scanlines 1s steps(60) infinite;
+}
+
+@keyframes scanlines {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 0 -240px;
+  }
+}
+
+.vignette {
+  pointer-events: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  box-shadow: inset 0 0 150px rgba(0, 0, 0, .8);
+  mix-blend-mode: multiply;
+}
+
+.crt-content {
+  animation: textShadow 1.6s infinite;
+}
+
+@keyframes textShadow {
+  0% {
+    text-shadow: 0.4389924193300864px 0 1px rgba(0, 30, 255, 0.5),
+      -0.4389924193300864px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
+  }
+  5% {
+    text-shadow: 2.7928974010788217px 0 1px rgba(0, 30, 255, 0.5),
+      -2.7928974010788217px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
+  }
+  100% {
+    text-shadow: -0.5908211115419403px 0 1px rgba(0, 30, 255, 0.5),
+      0.5908211115419403px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
+  }
+}
+
+@keyframes backgroundBlink {
+  0% {
+    background-color: rgba(34, 197, 94, 0.1); /* green-500/10 */
+  }
+  50% {
+    background-color: rgba(34, 197, 94, 0.05); /* green-500/5 */
+  }
+  100% {
+    background-color: rgba(34, 197, 94, 0.1); /* green-500/10 */
+  }
+}
+
+.bg-blink {
+  animation: backgroundBlink 2s infinite;
+}
